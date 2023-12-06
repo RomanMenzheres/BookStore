@@ -1,6 +1,6 @@
 package com.example.bookstore.repository;
 
-import com.example.bookstore.entity.Book;
+import com.example.bookstore.model.Book;
 import java.util.List;
 
 public interface BookRepository {
