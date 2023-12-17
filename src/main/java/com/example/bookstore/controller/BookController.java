@@ -1,6 +1,7 @@
 package com.example.bookstore.controller;
 
 import com.example.bookstore.dto.BookDto;
+import com.example.bookstore.dto.BookSearchParameters;
 import com.example.bookstore.dto.CreateBookRequestDto;
 import com.example.bookstore.service.BookService;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -46,6 +48,11 @@ public class BookController {
     @DeleteMapping("/{id}")
     public BookDto deleteById(@PathVariable("id") Long id) {
         return bookService.delete(id);
+    }
+
+    @GetMapping("/search")
+    public List<BookDto> search(BookSearchParameters searchParameters) {
+        return bookService.search(searchParameters);
     }
 
 }
