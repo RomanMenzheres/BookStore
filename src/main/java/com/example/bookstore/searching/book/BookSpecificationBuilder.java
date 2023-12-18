@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BookSpecificationBuilder implements SpecificationBuilder<Book, BookSearchParameters> {
-
+    private static final String AUTHOR_SEARCH_PARAMETER = "author";
+    private static final String TITLE_SEARCH_PARAMETER = "title";
     private final BookSpecificationProviderManager specificationProviderManager;
 
     public BookSpecificationBuilder(BookSpecificationProviderManager specificationProviderManager) {
@@ -21,13 +22,13 @@ public class BookSpecificationBuilder implements SpecificationBuilder<Book, Book
 
         if (searchParameters.authors() != null && searchParameters.authors().length > 0) {
             spec = spec.and(specificationProviderManager
-                    .getSpecificationProvider("author")
+                    .getSpecificationProvider(AUTHOR_SEARCH_PARAMETER)
                     .getSpecification(searchParameters.authors()));
         }
 
         if (searchParameters.titles() != null && searchParameters.titles().length > 0) {
             spec = spec.and(specificationProviderManager
-                    .getSpecificationProvider("title")
+                    .getSpecificationProvider(TITLE_SEARCH_PARAMETER)
                     .getSpecification(searchParameters.titles()));
         }
 
