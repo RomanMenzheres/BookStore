@@ -8,18 +8,14 @@ import org.hibernate.validator.constraints.ISBN;
 import org.hibernate.validator.constraints.Length;
 
 public class CreateBookRequestDto {
-    @NotNull
     @NotEmpty
     @Length(max = 255)
     private String title;
-    @NotNull
     @NotEmpty
     @Length(max = 255)
     private String author;
-    @ISBN
+    @ISBN(type = ISBN.Type.ANY)
     private String isbn;
-    @NotNull
-    @NotEmpty
     @Min(0)
     private BigDecimal price;
     @NotNull

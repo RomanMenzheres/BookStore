@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ public class BookController {
         return bookService.findAll(pageable);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     @Operation(summary = "Create a new book", description = "Create a new book")
     public BookDto createBook(@RequestBody @Valid CreateBookRequestDto requestDto) {
@@ -46,6 +48,7 @@ public class BookController {
         return bookService.findById(id);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{id}")
     @Operation(summary = "Update the book by id",
             description = "Update the information about book by id")
@@ -54,6 +57,7 @@ public class BookController {
         return bookService.update(id, requestDto);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete the book by id", description = "Delete the book by id")
     public BookDto deleteById(@PathVariable("id") Long id) {
