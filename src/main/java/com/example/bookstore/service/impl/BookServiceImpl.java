@@ -10,26 +10,16 @@ import com.example.bookstore.repository.BookRepository;
 import com.example.bookstore.searching.book.BookSpecificationBuilder;
 import com.example.bookstore.service.BookService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
-
     private final BookMapper bookMapper;
-
     private final BookSpecificationBuilder bookSpecificationBuilder;
-
-    @Autowired
-    public BookServiceImpl(BookRepository bookRepository,
-                           BookMapper bookMapper,
-                           BookSpecificationBuilder bookSpecificationBuilder) {
-        this.bookRepository = bookRepository;
-        this.bookMapper = bookMapper;
-        this.bookSpecificationBuilder = bookSpecificationBuilder;
-    }
 
     @Override
     public BookDto save(CreateBookRequestDto requestDto) {
