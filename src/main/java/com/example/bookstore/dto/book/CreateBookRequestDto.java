@@ -1,23 +1,33 @@
-package com.example.bookstore.dto;
+package com.example.bookstore.dto.book;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
+import org.hibernate.validator.constraints.ISBN;
+import org.hibernate.validator.constraints.Length;
 
-public class BookDto {
-    private Long id;
+public class CreateBookRequestDto {
+    @NotEmpty
+    @Length(max = 255)
     private String title;
+    @NotEmpty
+    @Length(max = 255)
     private String author;
+    @ISBN(type = ISBN.Type.ANY)
     private String isbn;
+    @Min(0)
     private BigDecimal price;
+    @NotNull
+    @Length(max = 255)
     private String description;
+    @NotNull
+    @Length(max = 255)
     private String coverImage;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @NotEmpty
+    private Set<Long> categoryIds = new HashSet<>();
 
     public String getTitle() {
         return title;
@@ -65,5 +75,13 @@ public class BookDto {
 
     public void setCoverImage(String coverImage) {
         this.coverImage = coverImage;
+    }
+
+    public Set<Long> getCategoryIds() {
+        return categoryIds;
+    }
+
+    public void setCategoryIds(Set<Long> categoryIds) {
+        this.categoryIds = categoryIds;
     }
 }

@@ -1,6 +1,6 @@
 package com.example.bookstore.searching.book;
 
-import com.example.bookstore.dto.BookSearchParameters;
+import com.example.bookstore.dto.book.BookSearchParameters;
 import com.example.bookstore.model.Book;
 import com.example.bookstore.searching.SpecificationBuilder;
 import org.springframework.data.jpa.domain.Specification;
