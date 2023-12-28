@@ -34,28 +34,24 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(body, headers, status);
     }
 
-    @ExceptionHandler({RegistrationException.class})
+    @ExceptionHandler(
+            {
+                    RegistrationException.class,
+                    EntityNotFoundException.class,
+                    OrderCreationException.class
+            }
+    )
     public ResponseEntity<Object> handleRegistrationException(
-            RegistrationException exception
+            RuntimeException exception
     ) {
+        HttpStatus status = getStatus(exception);
+
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.CONFLICT);
+        body.put("status", status);
         body.put("error", exception.getMessage());
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
-    }
-
-    @ExceptionHandler({EntityNotFoundException.class})
-    public ResponseEntity<Object> handleEntityNotFoundException(
-            EntityNotFoundException exception
-    ) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.NOT_FOUND);
-        body.put("error", exception.getMessage());
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+        return ResponseEntity.status(status).body(body);
     }
 
     private String getErrorMessage(ObjectError error) {
@@ -66,5 +62,19 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         }
 
         return error.getDefaultMessage();
+    }
+
+    private HttpStatus getStatus(RuntimeException exception) {
+        HttpStatus status = null;
+
+        if (exception instanceof RegistrationException) {
+            status = HttpStatus.CONFLICT;
+        } else if (exception instanceof EntityNotFoundException) {
+            status = HttpStatus.NOT_FOUND;
+        } else {
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        return status;
     }
 }
