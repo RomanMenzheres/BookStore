@@ -1,0 +1,1 @@
+DELETE FROM books WHERE title = 'Title' AND author = 'Author' AND isbn = '978-3-16-148410-0';
