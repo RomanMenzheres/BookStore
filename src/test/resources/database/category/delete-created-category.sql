@@ -1,0 +1,1 @@
+DELETE FROM categories WHERE name = 'Category' AND description = 'Unreal category';
