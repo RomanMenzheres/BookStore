@@ -16,7 +16,7 @@ import com.example.bookstore.mapper.BookMapper;
 import com.example.bookstore.model.Book;
 import com.example.bookstore.repository.BookRepository;
 import com.example.bookstore.service.impl.BookServiceImpl;
-import java.math.BigDecimal;
+import com.example.bookstore.supplier.BookSupplier;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -40,34 +40,11 @@ public class BookServiceTest {
     private BookServiceImpl bookService;
 
     @Test
-    @DisplayName("""
-            Verify save() method works
-            """)
+    @DisplayName("Verify save() method works")
     public void save_ValidCreateRequestDto_ReturnsBookDto() {
-        CreateBookRequestDto requestDto = new CreateBookRequestDto()
-                .setTitle("Title")
-                .setAuthor("Author")
-                .setIsbn("0-061-96436-0")
-                .setPrice(BigDecimal.valueOf(19.99))
-                .setDescription("description")
-                .setCoverImage("https://example.com/updated-cover-image.jpg");
-
-        Book book = new Book();
-        book.setTitle(requestDto.getTitle());
-        book.setAuthor(requestDto.getAuthor());
-        book.setIsbn(requestDto.getIsbn());
-        book.setPrice(requestDto.getPrice());
-        book.setDescription(requestDto.getDescription());
-        book.setCoverImage(requestDto.getCoverImage());
-
-        BookDto expected = new BookDto();
-        expected.setId(1L);
-        expected.setTitle(book.getTitle());
-        expected.setAuthor(book.getAuthor());
-        expected.setIsbn(book.getIsbn());
-        expected.setPrice(book.getPrice());
-        expected.setDescription(book.getDescription());
-        expected.setCoverImage(book.getCoverImage());
+        CreateBookRequestDto requestDto = BookSupplier.getCreateBookRequestDto();
+        Book book = BookSupplier.getBook();
+        BookDto expected = BookSupplier.getBookDto();
 
         when(bookMapper.toModel(requestDto)).thenReturn(book);
         when(bookRepository.save(book)).thenReturn(book);
@@ -82,27 +59,10 @@ public class BookServiceTest {
     }
 
     @Test
-    @DisplayName("""
-            Verify findAll() method works
-            """)
+    @DisplayName("Verify findAll() method works")
     public void findAll_ValidPageable_ReturnsAllBooks() {
-        Book book = new Book();
-        book.setTitle("Title");
-        book.setAuthor("Author");
-        book.setIsbn("0-061-96436-0");
-        book.setPrice(BigDecimal.valueOf(19.99));
-        book.setDescription("description");
-        book.setCoverImage("https://example.com/updated-cover-image.jpg");
-
-        BookDto bookDto = new BookDto();
-        bookDto.setId(1L);
-        bookDto.setTitle(book.getTitle());
-        bookDto.setAuthor(book.getAuthor());
-        bookDto.setIsbn(book.getIsbn());
-        bookDto.setPrice(book.getPrice());
-        bookDto.setDescription(book.getDescription());
-        bookDto.setCoverImage(book.getCoverImage());
-
+        Book book = BookSupplier.getBook();
+        BookDto bookDto = BookSupplier.getBookDto();
         Pageable pageable = PageRequest.of(0, 10);
         List<Book> books = List.of(book);
         Page<Book> bookPage = new PageImpl<>(books, pageable, books.size());
@@ -120,29 +80,15 @@ public class BookServiceTest {
     }
 
     @Test
-    @DisplayName("""
-            Verify the correct book was returned when book exists
-            """)
+    @DisplayName("Verify the correct book was returned when book exists")
     public void findById_ValidId_ReturnsBookDto() {
         Long bookId = 1L;
 
-        Book book = new Book();
+        Book book = BookSupplier.getBook();
         book.setId(bookId);
-        book.setTitle("Title");
-        book.setAuthor("Author");
-        book.setIsbn("0-061-96436-0");
-        book.setPrice(BigDecimal.valueOf(19.99));
-        book.setDescription("description");
-        book.setCoverImage("https://example.com/updated-cover-image.jpg");
 
-        BookDto expected = new BookDto();
+        BookDto expected = BookSupplier.getBookDto();
         expected.setId(bookId);
-        expected.setTitle(book.getTitle());
-        expected.setAuthor(book.getAuthor());
-        expected.setIsbn(book.getIsbn());
-        expected.setPrice(book.getPrice());
-        expected.setDescription(book.getDescription());
-        expected.setCoverImage(book.getCoverImage());
 
         when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
         when(bookMapper.toDto(book)).thenReturn(expected);
@@ -157,9 +103,7 @@ public class BookServiceTest {
     }
 
     @Test
-    @DisplayName("""
-            Verify the exception was thrown when invalid id
-            """)
+    @DisplayName("Verify the exception was thrown when invalid id")
     public void findById_InvalidId_ThrowsException() {
         Long bookId = null;
 

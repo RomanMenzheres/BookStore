@@ -16,6 +16,7 @@ import com.example.bookstore.mapper.CategoryMapper;
 import com.example.bookstore.model.Category;
 import com.example.bookstore.repository.CategoryRepository;
 import com.example.bookstore.service.impl.CategoryServiceImpl;
+import com.example.bookstore.supplier.CategorySupplier;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -39,21 +40,11 @@ public class CategoryServiceTest {
     private CategoryServiceImpl categoryService;
 
     @Test
-    @DisplayName("""
-            Verify save() method works
-            """)
+    @DisplayName("Verify save() method works")
     public void save_ValidCreateRequestDto_ReturnsCategoryDto() {
-        CreateCategoryRequestDto requestDto = new CreateCategoryRequestDto()
-                .setName("Category")
-                .setDescription("Unreal category");
-
-        Category category = new Category();
-        category.setName(requestDto.getName());
-        category.setDescription(requestDto.getDescription());
-
-        CategoryDto expected = new CategoryDto(
-                1L, category.getName(), category.getDescription()
-        );
+        CreateCategoryRequestDto requestDto = CategorySupplier.getCreateCategoryRequestDto();
+        Category category = CategorySupplier.getCategory();
+        CategoryDto expected = CategorySupplier.getCategoryDto();
 
         when(categoryMapper.toEntity(requestDto)).thenReturn(category);
         when(categoryRepository.save(category)).thenReturn(category);
@@ -68,18 +59,10 @@ public class CategoryServiceTest {
     }
 
     @Test
-    @DisplayName("""
-            Verify findAll() method works
-            """)
+    @DisplayName("Verify findAll() method works")
     public void findAll_ValidPageable_ReturnsAllCategories() {
-        Category category = new Category();
-        category.setName("Category");
-        category.setDescription("Unreal category");
-
-        CategoryDto categoryDto = new CategoryDto(
-                1L, category.getName(), category.getDescription()
-        );
-
+        Category category = CategorySupplier.getCategory();
+        CategoryDto categoryDto = CategorySupplier.getCategoryDto();
         Pageable pageable = PageRequest.of(0, 10);
         List<Category> categories = List.of(category);
         Page<Category> categoryPage = new PageImpl<>(categories, pageable, categories.size());
@@ -97,20 +80,14 @@ public class CategoryServiceTest {
     }
 
     @Test
-    @DisplayName("""
-            Verify the correct category was returned when category exists
-            """)
+    @DisplayName("Verify the correct category was returned when category exists")
     public void findById_ValidId_ReturnsCategoryDto() {
         Long categoryId = 1L;
 
-        Category category = new Category();
+        Category category = CategorySupplier.getCategory();
         category.setId(categoryId);
-        category.setName("Category");
-        category.setDescription("Unreal category");
 
-        CategoryDto expected = new CategoryDto(
-                categoryId, category.getName(), category.getDescription()
-        );
+        CategoryDto expected = CategorySupplier.getCategoryDto();
 
         when(categoryRepository.findById(categoryId)).thenReturn(Optional.of(category));
         when(categoryMapper.toDto(category)).thenReturn(expected);
@@ -125,9 +102,7 @@ public class CategoryServiceTest {
     }
 
     @Test
-    @DisplayName("""
-            Verify the exception was thrown when invalid id
-            """)
+    @DisplayName("Verify the exception was thrown when invalid id")
     public void findById_InvalidId_ThrowsException() {
         Long categoryId = null;
 

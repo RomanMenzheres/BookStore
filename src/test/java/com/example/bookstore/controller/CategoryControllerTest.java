@@ -9,10 +9,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.bookstore.dto.category.CategoryDto;
 import com.example.bookstore.dto.category.CreateCategoryRequestDto;
+import com.example.bookstore.supplier.CategorySupplier;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.sql.DataSource;
@@ -83,21 +83,15 @@ public class CategoryControllerTest {
     )
     @DisplayName("Create a new category with valid request dto test")
     void createBook_ValidRequestDto_Success() throws Exception {
-        CreateCategoryRequestDto requestDto = new CreateCategoryRequestDto()
-                .setName("Category")
-                .setDescription("Unreal category");
-
-        CategoryDto expected = new CategoryDto(
-                1L, requestDto.getName(), requestDto.getDescription()
-        );
+        CreateCategoryRequestDto requestDto = CategorySupplier.getCreateCategoryRequestDto();
+        CategoryDto expected = CategorySupplier.getCategoryDto();
 
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
         MvcResult result = mockMvc.perform(
                 post("/api/categories")
                         .content(jsonRequest)
-                        .contentType(MediaType.APPLICATION_JSON)
-                )
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andReturn();
 
@@ -114,17 +108,14 @@ public class CategoryControllerTest {
     @Test
     @DisplayName("Create a new category with invalid request dto test")
     void createBook_InvalidRequestDto_BadRequest() throws Exception {
-        CreateCategoryRequestDto requestDto = new CreateCategoryRequestDto()
-                .setName("")
-                .setDescription("");
+        CreateCategoryRequestDto requestDto = CategorySupplier.getInvalidCreateCategoryRequestDto();
 
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
         mockMvc.perform(
                 post("/api/categories")
                         .content(jsonRequest)
-                        .contentType(MediaType.APPLICATION_JSON)
-                )
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andReturn();
     }
@@ -133,18 +124,11 @@ public class CategoryControllerTest {
     @Test
     @DisplayName("Get All categories test")
     void getAll_GivenCategories_Success() throws Exception {
-        List<CategoryDto> expected = new ArrayList<>();
-        expected.add(new CategoryDto(
-                1L, "Fantasy", "Fantasy books"));
-        expected.add(new CategoryDto(
-                2L, "Historical fiction", "Historical books"));
-        expected.add(new CategoryDto(
-                3L, "Mystery", "Mystery books"));
+        List<CategoryDto> expected = CategorySupplier.getAllCategoriesInDb();
 
         MvcResult result = mockMvc.perform(
                 get("/api/categories")
-                        .contentType(MediaType.APPLICATION_JSON)
-                )
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -159,13 +143,11 @@ public class CategoryControllerTest {
     @Test
     @DisplayName("Get category by valid id test")
     void getCategoryById_ValidId_Success() throws Exception {
-        CategoryDto expected = new CategoryDto(
-                1L, "Fantasy", "Fantasy books");
+        CategoryDto expected = CategorySupplier.getCategoryWithId1();
 
         MvcResult result = mockMvc.perform(
                 get("/api/categories/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                )
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -182,8 +164,7 @@ public class CategoryControllerTest {
     void getCategoryById_NotExistsId_NotFound() throws Exception {
         mockMvc.perform(
                 get("/api/categories/-1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                )
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andReturn();
     }
