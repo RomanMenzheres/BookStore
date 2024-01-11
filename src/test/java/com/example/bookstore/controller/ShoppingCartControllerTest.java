@@ -144,6 +144,10 @@ public class ShoppingCartControllerTest {
             scripts = "classpath:database/cart/create-one-cart-item.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
     )
+    @Sql(
+            scripts = "classpath:database/cart/delete-created-cart-item.sql",
+            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
+    )
     @DisplayName("Add a new cart item to shopping cart with valid request dto test")
     void deleteCartItem_ValidRequestDto_Success() throws Exception {
         mockMvc.perform(
