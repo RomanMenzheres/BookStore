@@ -87,12 +87,12 @@ public class OrderServiceTest {
     @DisplayName("Verify createOrder() method works with valid input data")
     public void createOrder_ValidData_Success() {
         User user = UserSupplier.getUser();
-        CreateOrderRequestDto requestDto = OrderSupplier.getCreateRequestOrderDto();
         CartItem cartItem = CartItemSupplier.getCartItem();
         ShoppingCart shoppingCart = ShoppingCartSupplier.getShoppingCart();
         shoppingCart.setCartItems(Set.of(cartItem));
         Order order = OrderSupplier.getOrder();
         OrderDto expected = OrderSupplier.getOrderDto();
+        CreateOrderRequestDto requestDto = OrderSupplier.getCreateRequestOrderDto();
 
         when(shoppingCartRepository.findByUser(user)).thenReturn(Optional.of(shoppingCart));
         when(orderRepository.save(any(Order.class))).thenReturn(order);

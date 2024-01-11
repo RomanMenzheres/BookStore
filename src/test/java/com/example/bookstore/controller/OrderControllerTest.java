@@ -111,13 +111,13 @@ public class OrderControllerTest {
         List<OrderDto> expected = List.of(orderDto);
 
         MvcResult result = mockMvc.perform(
-                        get("/api/orders")
-                                .contentType(MediaType.APPLICATION_JSON))
+                get("/api/orders")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
         OrderDto[] actual = objectMapper.readValue(
-                result.getResponse().getContentAsString(),  OrderDto[].class
+                result.getResponse().getContentAsString(), OrderDto[].class
         );
 
         assertEquals(expected.size(), actual.length);
@@ -157,7 +157,7 @@ public class OrderControllerTest {
                 .andReturn();
 
         OrderDto actual = objectMapper.readValue(
-                result.getResponse().getContentAsString(),  OrderDto.class
+                result.getResponse().getContentAsString(), OrderDto.class
         );
 
         assertNotNull(actual);

@@ -2,7 +2,6 @@ package com.example.bookstore.supplier;
 
 import com.example.bookstore.dto.order.OrderItemDto;
 import com.example.bookstore.model.OrderItem;
-
 import java.math.BigDecimal;
 
 public class OrderItemSupplier {
