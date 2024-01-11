@@ -1,0 +1,1 @@
+DELETE FROM orders WHERE shipping_address = '123 Main St, City, Country';
