@@ -21,6 +21,7 @@ public class BookSupplier {
 
     public static Book getBook() {
         Book book = new Book();
+        book.setId(1L);
         book.setTitle("Title");
         book.setAuthor("Author");
         book.setIsbn("978-3-16-148410-0");
