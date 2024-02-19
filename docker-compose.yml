@@ -10,6 +10,7 @@ services:
       - MYSQL_DATABASE=$MYSQLDB_DATABASE
     ports:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    command: --innodb-redo-log-capacity=10485760
 
   app:
     depends_on:
