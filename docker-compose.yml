@@ -3,7 +3,7 @@ version: "3.1.1"
 services:
   mysqldb:
     platform: linux/arm64
-    image: mysql
+    image: mysql:8.0.36
     env_file: ./.env
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
