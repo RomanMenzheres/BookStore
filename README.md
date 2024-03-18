@@ -9,16 +9,16 @@ Book store is a service buying books. API supports different operations:
 
 ## Used Technologies
 **Core Technologies:**
-* Java
+* Java 17
 * Maven
 **Spring Framework:**
-* Spring Boot
+* Spring Boot 3.2.0
 * Spring Boot Web
 * Spring Data JPA
 * Spring Boot Security
 * Spring Boot Validation
 **Database:**
-* MySQL
+* MySQL 8.0.33
 * Hibernate
 * Liquibase
 * H2 for testing
@@ -68,7 +68,7 @@ Book store is a service buying books. API supports different operations:
 * `DELETE: /api/cart/cart-items/{cartItemId}` - The endpoint for deleting items from a shopping cart.
 
 ## Run Project On Your Machine
-1. Download [Java](https://www.java.com/ru/download/manual.jsp) and [Docker](https://www.docker.com/products/docker-desktop/).
+1. Download [Java](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) and [Docker](https://www.docker.com/products/docker-desktop/).
 2. Clone the repository:
     - Open your terminal and paste: `git clone https://github.com/RomanMenzheres/BookStore.git`
 3. Create the .env file with the corresponding variables:
