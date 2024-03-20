@@ -1,5 +1,5 @@
 # 📚 Online Book Store 📚
-Book store is a service buying books. API supports different operations:
+Book store is a service for buying books. API supports different operations:
 * Assortment Management:
     Adding new books, removing outdated or no longer available items, organizing books into categories for efficient cataloging.
 * Shopping Cart Operations:
@@ -80,3 +80,5 @@ Book store is a service buying books. API supports different operations:
     - Open your terminal and paste: `docker compose build` and `docker compose up`
 > [!TIP]
 > You can test all methods by your own visiting [Project Documentation](http://ec2-16-171-153-153.eu-north-1.compute.amazonaws.com/swagger-ui/index.html)
+
+## Video
