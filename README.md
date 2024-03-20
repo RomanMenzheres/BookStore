@@ -11,22 +11,26 @@ Book store is a service for buying books. API supports different operations:
 **Core Technologies:**
 * Java 17
 * Maven
+
 **Spring Framework:**
 * Spring Boot 3.2.0
 * Spring Boot Web
 * Spring Data JPA
 * Spring Boot Security
 * Spring Boot Validation
+
 **Database:**
 * MySQL 8.0.33
 * Hibernate
 * Liquibase
 * H2 for testing
+
 **Testing:**
 * Spring Boot Starter Test
 * JUnit
 * Mockito
 * Docker Test Containers
+
 **Auxiliary Libraries and tools:**
 * Docker
 * Lombok
