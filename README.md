@@ -86,3 +86,4 @@ Book store is a service for buying books. API supports different operations:
 > You can test all methods by your own visiting [Project Documentation](http://ec2-16-171-153-153.eu-north-1.compute.amazonaws.com/swagger-ui/index.html)
 
 ## Video
+Link: https://www.loom.com/share/8c787a02ad234590b161636425432c5d?sid=bcee09c9-3083-488b-8a12-b5c318f9583e
