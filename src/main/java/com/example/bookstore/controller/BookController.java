@@ -62,8 +62,8 @@ public class BookController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete the book by id", description = "Delete the book by id")
-    public BookDto deleteById(@PathVariable("id") Long id) {
-        return bookService.delete(id);
+    public void deleteById(@PathVariable("id") Long id) {
+        bookService.delete(id);
     }
 
     @GetMapping("/search")

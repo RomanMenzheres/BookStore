@@ -3,7 +3,7 @@ version: "3.1.1"
 services:
   mysqldb:
     platform: linux/arm64
-    image: mysql:8.0.33
+    image: mysql:latest
     env_file: ./.env
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
@@ -11,10 +11,13 @@ services:
     ports:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     command: --innodb-redo-log-capacity=10485760
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
 
   app:
     depends_on:
-      - mysqldb
+      mysqldb:
+        condition: service_healthy
     image: book-store-service
     build: .
     env_file: ./.env
